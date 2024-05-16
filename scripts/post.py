@@ -20,8 +20,8 @@ def source_key(key: str = "nsec1al8wfs9g70etrcxzgxrfma9km9ae2n8jsl4rf7fjt6s3hvtr
     return k
 
 
-async def do_post(url, text):
-
+async def do_post(text, url = "ws://localhost:8080"):
+    n_keys = source_key()
     async with Client(url) as c:
         n_msg = Event(
             kind=Event.KIND_TEXT_NOTE, content=text, pub_key=n_keys.public_key_hex()
@@ -30,10 +30,6 @@ async def do_post(url, text):
         c.publish(n_msg)
 
 
-if __name__ == "__main__":
+def posting(text):
     logging.getLogger().setLevel(logging.DEBUG)
-    url = "ws://localhost:8080"
-    text = "Dunno why but something is not working"
-    n_keys = source_key()
-
-    asyncio.run(do_post(url, text))
+    asyncio.run(do_post(text))
