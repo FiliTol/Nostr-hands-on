@@ -2,15 +2,8 @@ import logging
 import asyncio
 from monstr.client.client import Client, ClientPool
 
-DEFAULT_RELAY = "ws://localhost:8080"
-FILTER = [
-    {
-        'limit': 100
-    }
-]
 
-
-async def one_query(relay=DEFAULT_RELAY):
+async def one_query(relay):
     async with Client(relay) as c:
         events = await c.query(FILTER)
         for c_evt in events:
@@ -18,5 +11,7 @@ async def one_query(relay=DEFAULT_RELAY):
 
 
 if __name__ == '__main__':
+    RELAY = "ws://localhost:8080"
+    FILTER = [{'limit': 100}]
     logging.getLogger().setLevel(logging.DEBUG)
-    asyncio.run(one_query())
+    asyncio.run(one_query(RELAY))
