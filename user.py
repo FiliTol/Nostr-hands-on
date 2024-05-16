@@ -3,12 +3,13 @@ import asyncio
 import logging
 from monstr.client.client import Client, ClientPool
 from monstr.event.event import Event
-from monstr.signing import BasicKeySigner
+import os
+
+
+n_keys = os.environ['BECH_PRIV_NOSTR']
 
 
 async def do_post(url, text):
-
-    n_keys = Keys()
 
     async with Client(url) as c:
         n_msg = Event(kind=Event.KIND_TEXT_NOTE,
