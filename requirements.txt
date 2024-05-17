@@ -20,9 +20,6 @@ PyQt5==5.15.10
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.13.0
 PyQt5-stubs==5.15.6.0
-PySide6==6.7.0
-PySide6_Addons==6.7.0
-PySide6_Essentials==6.7.0
 secp256k1==0.14.0
 setuptools==69.5.1
 shiboken6==6.7.0

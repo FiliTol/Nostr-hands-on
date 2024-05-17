@@ -13,6 +13,6 @@ async def one_query(relay):
         return results
 
 
-def querying(relay="ws://localhost:8080"):
+def querying(relay="ws://192.168.1.94:808/"):
     logging.getLogger().setLevel(logging.DEBUG)
     return asyncio.run(one_query(relay))

@@ -52,9 +52,3 @@ class MyApp(QWidget):
         result = querying()
         for r in result:
             self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
-
-
-#if __name__ == '__main__':
-#    app = QApplication(sys.argv)
-#    ex = MyApp()
-#    sys.exit(app.exec_())
