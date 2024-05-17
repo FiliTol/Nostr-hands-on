@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel, \
-    QMessageBox
+
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel, QMessageBox
 from scripts.post import posting
 from scripts.one_query import querying
 from scripts.relay import test_relay
@@ -37,6 +38,7 @@ class MyApp(QWidget):
         center_left_layout = QHBoxLayout()
         self.input_text = QLineEdit()
         self.input_text.setFixedHeight(500)
+        self.input_text.setAlignment(Qt.AlignTop)
         self.submit_button = QPushButton('Submit')
         self.submit_button.setFixedHeight(30)
         self.submit_button.setFixedWidth(100)
@@ -53,8 +55,8 @@ class MyApp(QWidget):
         bottom_left_layout.addWidget(self.bottom_button)
 
         left_layout.addLayout(top_left_layout)
-        left_layout.addLayout(bottom_left_layout)
         left_layout.addLayout(center_left_layout)
+        left_layout.addLayout(bottom_left_layout)
 
         # Right vertical layout
         self.output_text = QTextEdit()
@@ -69,8 +71,10 @@ class MyApp(QWidget):
     def submit_text(self):
         note_text = self.input_text.text()
         posting(note_text, self.relay)
+        self.input_text.clear()
 
     def show_text(self):
+        self.output_text.clear()
         result = querying(self.relay)
         for r in result:
             self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
