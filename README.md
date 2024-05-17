@@ -38,20 +38,20 @@ On the contrary, the relay is already compatible with the broader ecosistem of N
 
 ### Client
 
-[] Text content is deleted from the input form once the submission to the relay succeded;
+[ ] Text content is deleted from the input form once the submission to the relay succeded;
 
-[] Subscription-based retrieval of data from relay (once `monstr` implements the proper handler features);
+[ ] Subscription-based retrieval of data from relay (once `monstr` implements the proper handler features);
 
-[] Time limit on the retrieved data from the relay;
+[ ] Time limit on the retrieved data from the relay;
 
-[] NIP1-compatible formatting for shared notes;
+[ ] NIP1-compatible formatting for shared notes;
 
-[] NIP-compatible encryption scheme for text notes, as described in the DM specs for Nostr clients;
+[ ] NIP-compatible encryption scheme for text notes, as described in the DM specs for Nostr clients;
 
-[] Better styling of the client application.
+[ ] Better styling of the client application.
 
 ### Relay
 
-[] SQLite integration for long-term storage of notes.
+[ ] SQLite integration for long-term storage of notes.
 
 
