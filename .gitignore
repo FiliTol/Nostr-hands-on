@@ -3,8 +3,6 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 .idea/
-qt/posting.py
-qt/run.py
 qt/test.py
 
 # User-specific stuff
