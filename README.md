@@ -38,6 +38,7 @@ On the contrary, the relay is already compatible with the broader ecosistem of N
 
 ### Client
 
+- [ ]  Box to insert custom relay in the user interface;
 - [ ] Text content is deleted from the input form once the submission to the relay succeded;
 - [ ] Subscription-based retrieval of data from relay (once `monstr` implements the proper handler features);
 - [ ] Time limit on the retrieved data from the relay;
