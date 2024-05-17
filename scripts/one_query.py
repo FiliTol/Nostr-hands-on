@@ -10,10 +10,9 @@ async def one_query(relay):
         results = []
         for c_evt in events:
             results.append((c_evt.created_at, c_evt.id, c_evt.kind, c_evt.content))
+        return results
 
 
 def querying(relay="ws://localhost:8080"):
     logging.getLogger().setLevel(logging.DEBUG)
-    asyncio.run(one_query(relay))
-
-querying()
+    return asyncio.run(one_query(relay))

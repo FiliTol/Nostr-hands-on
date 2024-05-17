@@ -41,18 +41,17 @@ class MyApp(QWidget):
         main_layout = QHBoxLayout()
         main_layout.addLayout(left_layout)
         main_layout.addWidget(self.output_text)
-
         self.setLayout(main_layout)
-
         self.show()
 
     def submit_text(self):
         note_text = self.input_text.text()
         posting(note_text)
 
-    async def show_text(self):
-        querying()
-        await self.output_text.append()
+    def show_text(self):
+        result = querying()
+        for r in result:
+            self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
 
 
 if __name__ == '__main__':
