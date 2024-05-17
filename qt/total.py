@@ -3,20 +3,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPu
     QMessageBox
 from scripts.post import posting
 from scripts.one_query import querying
+from scripts.relay import test_relay
 import asyncio
-import websockets
 
-
-async def test_link(relay):
-    try:
-        async with websockets.connect(relay) as websocket:
-            return "Relay is reachable"
-    except Exception as e:
-        return "Relay is not reachable"
 
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.relay = "ws://192.168.1.94:808"
         self.initUI()
 
     def initUI(self):
@@ -74,18 +68,17 @@ class MyApp(QWidget):
 
     def submit_text(self):
         note_text = self.input_text.text()
-        posting(note_text)
+        posting(note_text, self.relay)
 
     def show_text(self):
-        result = querying()
+        result = querying(self.relay)
         for r in result:
             self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
 
     def show_popup(self):
-        link = self.text_edit.toPlainText()
-        result = asyncio.get_event_loop().run_until_complete(test_link(link))
+        self.relay = self.text_edit.toPlainText()
+        result = asyncio.run(test_relay(self.relay))
 
         msg = QMessageBox()
-        msg.setWindowTitle("Testing the relay...")
         msg.setText(result)
         msg.exec_()

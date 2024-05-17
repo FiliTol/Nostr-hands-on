@@ -20,9 +20,9 @@ def source_key(key: str = "nsec1al8wfs9g70etrcxzgxrfma9km9ae2n8jsl4rf7fjt6s3hvtr
     return k
 
 
-async def do_post(text, url = "ws://192.168.1.94:808/"):
+async def do_post(text, relay):
     n_keys = source_key()
-    async with Client(url) as c:
+    async with Client(relay) as c:
         n_msg = Event(
             kind=Event.KIND_TEXT_NOTE, content=text, pub_key=n_keys.public_key_hex()
         )
@@ -30,6 +30,6 @@ async def do_post(text, url = "ws://192.168.1.94:808/"):
         c.publish(n_msg)
 
 
-def posting(text):
+def posting(text, relay):
     logging.getLogger().setLevel(logging.DEBUG)
-    asyncio.run(do_post(text))
+    asyncio.run(do_post(text, relay))
