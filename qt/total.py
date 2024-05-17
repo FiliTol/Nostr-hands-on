@@ -1,9 +1,18 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel, \
+    QMessageBox
 from scripts.post import posting
 from scripts.one_query import querying
 import asyncio
+import websockets
 
+
+async def test_link(relay):
+    try:
+        async with websockets.connect(relay) as websocket:
+            return "Relay is reachable"
+    except Exception as e:
+        return "Relay is not reachable"
 
 class MyApp(QWidget):
     def __init__(self):
@@ -11,7 +20,7 @@ class MyApp(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(100, 100, 600, 400)
+        self.setGeometry(100, 100, 800, 400)
         self.setWindowTitle('NostrApp')
 
         # Left vertical layout
@@ -19,20 +28,39 @@ class MyApp(QWidget):
 
         # Top left horizontal layout
         top_left_layout = QHBoxLayout()
+        self.text_edit = QTextEdit()
+        self.text_edit.setText("ws://192.168.1.94:808")
+        self.text_edit.setFixedHeight(30)
+        self.text_edit.setFixedWidth(160)
+        top_left_layout.addWidget(self.text_edit)
+        self.button = QPushButton("Test relay")
+        self.button.setFixedHeight(30)
+        self.button.setFixedWidth(100)
+        self.button.clicked.connect(self.show_popup)
+        top_left_layout.addWidget(self.button)
+
+        # Center left horizontal layout
+        center_left_layout = QHBoxLayout()
         self.input_text = QLineEdit()
+        self.input_text.setFixedHeight(500)
         self.submit_button = QPushButton('Submit')
+        self.submit_button.setFixedHeight(30)
+        self.submit_button.setFixedWidth(100)
         self.submit_button.clicked.connect(self.submit_text)
-        top_left_layout.addWidget(self.input_text)
-        top_left_layout.addWidget(self.submit_button)
+        center_left_layout.addWidget(self.input_text)
+        center_left_layout.addWidget(self.submit_button)
 
         # Bottom left horizontal layout
         bottom_left_layout = QHBoxLayout()
         self.bottom_button = QPushButton('Show Text')
+        self.bottom_button.setFixedHeight(30)
+        self.bottom_button.setFixedWidth(100)
         self.bottom_button.clicked.connect(self.show_text)
         bottom_left_layout.addWidget(self.bottom_button)
 
         left_layout.addLayout(top_left_layout)
         left_layout.addLayout(bottom_left_layout)
+        left_layout.addLayout(center_left_layout)
 
         # Right vertical layout
         self.output_text = QTextEdit()
@@ -52,3 +80,12 @@ class MyApp(QWidget):
         result = querying()
         for r in result:
             self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
+
+    def show_popup(self):
+        link = self.text_edit.toPlainText()
+        result = asyncio.get_event_loop().run_until_complete(test_link(link))
+
+        msg = QMessageBox()
+        msg.setWindowTitle("Testing the relay...")
+        msg.setText(result)
+        msg.exec_()
