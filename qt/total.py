@@ -1,10 +1,11 @@
 import sys
-
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel, QMessageBox
-from scripts.post import posting
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QLineEdit, QLabel, \
+    QMessageBox
+from scripts.post import posting, view_pubkey
 from scripts.one_query import querying
 from scripts.relay import test_relay
+from scripts.qrcode_generator import set_qr_label
 import asyncio
 
 
@@ -20,6 +21,13 @@ class MyApp(QWidget):
 
         # Left vertical layout
         left_layout = QVBoxLayout()
+
+        # QR code tests
+        qrcode_left_layout = QHBoxLayout()
+        self.label = QLabel(self)
+        self.label.setGeometry(50, 50, 200, 200)
+        set_qr_label(self.label, view_pubkey())
+        qrcode_left_layout.addWidget(self.label)
 
         # Top left horizontal layout
         top_left_layout = QHBoxLayout()
@@ -54,6 +62,7 @@ class MyApp(QWidget):
         self.bottom_button.clicked.connect(self.show_text)
         bottom_left_layout.addWidget(self.bottom_button)
 
+        left_layout.addLayout(qrcode_left_layout)
         left_layout.addLayout(top_left_layout)
         left_layout.addLayout(center_left_layout)
         left_layout.addLayout(bottom_left_layout)
@@ -77,7 +86,7 @@ class MyApp(QWidget):
         self.output_text.clear()
         result = querying(self.relay)
         for r in result:
-            self.output_text.append("[" +str(r[0]) + "] " + str(r[3]))
+            self.output_text.append("[" + str(r[0]) + "] " + str(r[3]))
 
     def show_popup(self):
         self.relay = self.text_edit.toPlainText()
@@ -86,3 +95,9 @@ class MyApp(QWidget):
         msg = QMessageBox()
         msg.setText(result)
         msg.exec_()
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = MyApp()
+    sys.exit(app.exec_())

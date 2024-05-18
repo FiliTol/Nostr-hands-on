@@ -20,6 +20,10 @@ def source_key(key: str = "nsec1al8wfs9g70etrcxzgxrfma9km9ae2n8jsl4rf7fjt6s3hvtr
     return k
 
 
+def view_pubkey(key: Keys = source_key()) -> str:
+    return str(key.public_key_bech32())
+
+
 async def do_post(text, relay):
     n_keys = source_key()
     async with Client(relay) as c:
