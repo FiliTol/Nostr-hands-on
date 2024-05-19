@@ -95,9 +95,3 @@ class MyApp(QWidget):
         msg = QMessageBox()
         msg.setText(result)
         msg.exec_()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MyApp()
-    sys.exit(app.exec_())
