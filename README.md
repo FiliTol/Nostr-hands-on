@@ -50,8 +50,7 @@ On the contrary, the relay is already compatible with the broader ecosistem of N
 
 - [ ] SQLite integration for long-term storage of notes.
 
-
-== We're Using GitHub Under Protest ==
+## I'm Using GitHub Under Protest ==
 
 This project is currently hosted on GitHub.  This is not ideal; GitHub is a
 proprietary, trade-secret system that is not Free and Open Souce Software
